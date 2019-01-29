@@ -28,7 +28,7 @@ defmodule SluggerTest do
     assert Slugger.slugify("   A B  C  ") == "A-B-C"
     assert Slugger.slugify("   A B  C  ", ?_) == "A_B_C"
   end
-  
+
   test "replace multiple seperator inside and outside" do
     assert Slugger.slugify("--a--b c - - - ") == "a-b-c"
   end
@@ -44,8 +44,12 @@ defmodule SluggerTest do
     assert Slugger.slugify("Sheep's Milk") == "Sheeps-Milk"
   end
 
+  test "removing emoji" do
+    assert Slugger.slugify("😉 A B 😉 C 😉") == "A-B-C"
+  end
+
   #--- slugify_downcase()
-  
+
   test "string to lower" do
     assert Slugger.slugify_downcase("ABC") == "abc"
   end
@@ -69,6 +73,10 @@ defmodule SluggerTest do
 
   test "removing space between possessives lowercase" do
     assert Slugger.slugify_downcase("Sheep's Milk") == "sheeps-milk"
+  end
+
+  test "removing emoji lowercase" do
+    assert Slugger.slugify_downcase("😉 A B 😉 C 😉") == "a-b-c"
   end
 
   #--- Naughty strings
